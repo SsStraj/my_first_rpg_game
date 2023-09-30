@@ -1,0 +1,16 @@
+weapons = [{'Name': 'Ржавый меч',
+            'power': 5,
+            'cost': 2,
+            'level': 2,
+            'id': '1'},
+           {'Name': 'Медный меч',
+            'power': 8,
+            'cost': 3,
+            'level': 3,
+            'id': '2'},
+           {'Name': 'Железный меч',
+            'power': 10,
+            'cost': 5,
+            'level': 4,
+            'id': '3'}
+           ]
