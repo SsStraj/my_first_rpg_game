@@ -1,11 +1,13 @@
 import os
 import time
 import random
+from rich import print
 
 # todo: Сделать на карте разные объекты на карте,
 #  н-р: Деревня, лес, болото, предметы, торговцы, монстры и т.д.
 #  А также к каждому объекту добавить свой 'индекс',
 #  н-р: 1 - Деревня, 2 - Лес и т.д.
+#  когда персонаж переходит на какое либо поле он окрашивается в цвет этого поля
 # 1 Деревня - место ивентов, где игрок может остановиться за деньги или найти лут;
 # 2 Лес - место ивентов, также поле в котором даётся дебаф к скорости;
 # 3 Болото - место ивентов, также поле в котором даётся дебаф к скорости;
@@ -54,13 +56,6 @@ game_map = [
     [0, 0, 0, 0, 0],
 ]  # 0 - означает что клетка на карте пустая
 random_object()
-print(game_map_inside)
-input()
-
-
-# Проверка клетки
-def chek_cell():
-    pass
 
 
 # Проверка игрока в границах карты
@@ -70,19 +65,36 @@ def chek_move():
     if hero_coord_x == 5:
         print('Бро, ты не можешь выходить за границу карты!')
         hero_coord_x = 4
-        time.sleep(0.7)
+        time.sleep(1.3)
     elif hero_coord_x == -1:
         print('Бро, ты не можешь выходить за границу карты!')
         hero_coord_x = 0
-        time.sleep(0.7)
+        time.sleep(1.3)
     elif hero_coord_y == -1:
         print('Бро, ты не можешь выходить за границу карты!')
         hero_coord_y = 0
-        time.sleep(0.7)
+        time.sleep(1.3)
     elif hero_coord_y == 5:
         print('Бро, ты не можешь выходить за границу карты!')
         hero_coord_y = 4
-        time.sleep(0.7)
+        time.sleep(1.3)
+
+
+def chek_object():
+    global hero_coord_x
+    global hero_coord_y
+
+
+def show_map(coord_x, coord_y):
+    os.system('cls')
+
+    for y in range(len(game_map)):
+        for x in range(len(game_map)):
+            if y == coord_y and x == coord_x:
+                print("[green]@", end=' ')
+            else:
+                print(game_map[y][x], end=' ')
+        print()
 
 
 # Карта
@@ -90,46 +102,38 @@ def hero_map():
     global hero_coord_x
     global hero_coord_y
 
-    game_map[hero_coord_y][hero_coord_x] = "@"
-
-    os.system('cls')
-
-    for row in game_map:
-        print(*row)
+    show_map(hero_coord_x, hero_coord_y)
 
     print("Чтобы переместить персонажа вверх, вниз, влево или вправо введите w, s, a или d.")
     player_answer = input("Введите w, s, a или d:")
+
     if player_answer == 's' or player_answer == 'S':
-        game_map[hero_coord_y][hero_coord_x] = 0
         hero_coord_y = hero_coord_y + 1
         hero_coord_x = hero_coord_x
         chek_move()
-        game_map[hero_coord_y][hero_coord_x] = "@"
+        game_map[hero_coord_y][hero_coord_x] = game_map_inside[hero_coord_y][hero_coord_x]
         hero_map()
     elif player_answer == 'W' or player_answer == 'w':
-        game_map[hero_coord_y][hero_coord_x] = 0
         hero_coord_y = hero_coord_y - 1
         hero_coord_x = hero_coord_x
         chek_move()
-        game_map[hero_coord_y][hero_coord_x] = "@"
+        game_map[hero_coord_y][hero_coord_x] = game_map_inside[hero_coord_y][hero_coord_x]
         hero_map()
     elif player_answer == 'A' or player_answer == 'a':
-        game_map[hero_coord_y][hero_coord_x] = 0
         hero_coord_y = hero_coord_y
         hero_coord_x = hero_coord_x - 1
         chek_move()
-        game_map[hero_coord_y][hero_coord_x] = "@"
+        game_map[hero_coord_y][hero_coord_x] = game_map_inside[hero_coord_y][hero_coord_x]
         hero_map()
     elif player_answer == 'd' or player_answer == 'D':
-        game_map[hero_coord_y][hero_coord_x] = 0
         hero_coord_y = hero_coord_y
         hero_coord_x = hero_coord_x + 1
         chek_move()
-        game_map[hero_coord_y][hero_coord_x] = "@"
+        game_map[hero_coord_y][hero_coord_x] = game_map_inside[hero_coord_y][hero_coord_x]
         hero_map()
     else:
         print('Введите вверх, вниз, влево или право.')
-        time.sleep(0.5)
+        time.sleep(1.3)
         hero_map()
 
 
