@@ -17,6 +17,16 @@ from rich import print
 # 7 Дом персонажа(спавн) - место где гг может отдохнуть или выложить свой инвентарь.
 
 objection = [1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6]
+description_objects = {
+    1: 'Деревня',
+    2: "Лес",
+    3: "Болото",
+    4: "Лут",
+    5: "Торговец",
+    6: "Монстр",
+    7: "Дом персонажа"
+}
+
 hero_name = input("Как вы назовёте своего персонажа:")
 hero_hp = 100
 hero_lvl = 1
@@ -103,6 +113,9 @@ def hero_map():
     global hero_coord_y
 
     show_map(hero_coord_x, hero_coord_y)
+
+    current_object = game_map[hero_coord_y][hero_coord_x]
+    print('Сейчас вы находитесь в', description_objects[current_object])
 
     print("Чтобы переместить персонажа вверх, вниз, влево или вправо введите w, s, a или d.")
     player_answer = input("Введите w, s, a или d:")
